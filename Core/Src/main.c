@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "OLED.h"
+#include "stm32f1xx_it.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,9 +95,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-      OLED_ShowString(2, 1, "bobo chuchu =3=");
-      HAL_Delay(1000);
-
+      OLED_ShowString(2, 1, "Button Count:");
+      OLED_ShowNum(3, 5, get_button_press_count(), 8);
+      HAL_Delay(100); // Update the display every 100 ms
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

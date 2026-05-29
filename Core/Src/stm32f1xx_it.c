@@ -41,7 +41,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+uint32_t button_press_count = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -204,7 +204,7 @@ void SysTick_Handler(void)
 void EXTI1_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI1_IRQn 0 */
-
+  button_press_count++; // Increment the button press count
   /* USER CODE END EXTI1_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(Button_EXTI_Pin);
   /* USER CODE BEGIN EXTI1_IRQn 1 */
@@ -213,5 +213,7 @@ void EXTI1_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-
+uint32_t get_button_press_count(void) {
+    return button_press_count;
+}
 /* USER CODE END 1 */
