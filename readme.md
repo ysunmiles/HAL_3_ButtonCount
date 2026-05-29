@@ -1,28 +1,27 @@
-# HAL_2_OLED
+# HAL_3_ButtonCount
 
 ## 简介
 
-本项目基于 STM32F103 系列 MCU 和 STM32 HAL 库，演示了通过软件 I2C 控制 OLED 屏幕的显示。
-主程序在 OLED 上输出字符串，并使用 STM32CubeMX 生成的 CMake 构建配置。
+基于 STM32F103C8T6 与 STM32 HAL，本项目通过外部中断对按键计数，并在 OLED（SSD1306 驱动）上实时显示计数值。适合作为学习外部中断、GPIO 与软件 I2C 的示例工程。
 
-## 主要功能
+## 主要特性
 
-- 初始化并使用 STM32 HAL 驱动 STM32F103 MCU
-- 软件 I2C 方式驱动 OLED 显示屏（PB8=SCL，PB9=SDA）
-- OLED 清屏、显示字符串、显示数字、显示十六进制/二进制数
-- 使用 STM32CubeMX 生成的 Cube HAL 驱动代码与自定义 OLED 模块组合
+- 使用 STM32 HAL API，兼容 CubeMX 生成的初始化代码
+- 软件 I2C 驱动 SSD1306 OLED（默认 PB8=SCL，PB9=SDA，可在代码中修改）
+- 外部中断（按键）计数，主循环读取并刷新 OLED 显示
+- 简单按键去抖与计数溢出保护
 
-## 关键文件
+## 目录及关键文件
 
-- `CMakeLists.txt`：项目根 CMake 构建脚本
-- `CMakePresets.json`：配置和构建预设，支持 `Debug` 和 `Release`
-- `config.ioc`：STM32CubeMX 项目配置
-- `Core/Src/main.c`：主程序入口
-- `Core/Src/OLED.c`：OLED 控制逻辑与软件 I2C 实现
-- `Core/Inc/OLED.h`：OLED 功能接口声明
-- `Core/Inc/OLED_Font.h`：OLED 字库数据
-- `cmake/user_sources.cmake`：自定义源文件和 include 路径注册
-- `Drivers/`：STM32 HAL 库源文件和 CMSIS 头文件
+- CMakeLists.txt — 根构建脚本
+- CMakePresets.json — 构建预设（Debug / Release）
+- config.ioc — CubeMX 配置（外设、时钟、引脚配置）
+- Core/Src/main.c — 程序入口与主循环
+- Core/Src/OLED.c — OLED 驱动（软件 I2C）
+- Core/Inc/OLED.h — OLED 接口声明
+- Core/Inc/OLED_Font.h — 字库数据
+- cmake/user_sources.cmake — 自定义源与 include 注册
+- Drivers/ — STM32 HAL 与 CMSIS 文件
 
 ## 构建环境与依赖
 
@@ -33,13 +32,7 @@
 
 ## 构建步骤
 
-推荐使用 VS Code 的 CMake 工具或命令行：
-
-```bash
-cd d:/Electronics/HAL_Projects/HAL_2_OLED
-cmake --preset Debug
-cmake --build --preset Debug
-```
+推荐使用 VS Code 的 CMake 工具
 
 ## 运行与下载
 
@@ -52,6 +45,7 @@ cmake --build --preset Debug
 - OLED 使用软件 I2C 模拟，默认引脚：
   - `PB8`：SCL
   - `PB9`：SDA
+- 按钮：`PB1`
 
 ## 许可
 
